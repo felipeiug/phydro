@@ -22,10 +22,10 @@ def _extract_tipo_from_filename(filename: str, cod_estacao: int | str) -> str:
 
 def _find_header_line(text: str) -> int:
     for index, line in enumerate(text.splitlines()):
-        if ";" in line:
+        if ";" in line and 'EstacaoCodigo' in line:
             return index
 
-    raise ValueError("Nenhuma linha de cabecalho com ';' foi encontrada no TXT.")
+    raise ValueError("Nenhuma linha de cabecalho com ';' e 'EstacaoCodigo' foi encontrada no TXT.")
 
 
 def _read_txt_to_dataframe(file_bytes: bytes) -> pd.DataFrame:
@@ -42,6 +42,34 @@ def _read_txt_to_dataframe(file_bytes: bytes) -> pd.DataFrame:
 
 
 def get_station_data(
+    cod_estacao: int | str,
+    timeout: int = 60,
+) -> dict[str, pd.DataFrame]:
+    url = (
+        "https://www.snirh.gov.br/hidroweb/rest/api/documento/download/files"
+        f"?codigoestacao={cod_estacao}&tipodocumento=txt&forcenewfiles=S"
+    )
+
+    resp = requests.get(
+        url,
+        headers=get_headers(),
+        timeout=timeout,
+    )
+    resp.raise_for_status()
+
+    dataframes: dict[str, pd.DataFrame] = {}
+    with ZipFile(BytesIO(resp.content)) as zip_file:
+        for filename in zip_file.namelist():
+            if not filename.lower().endswith(".txt"):
+                continue
+
+            tipo = _extract_tipo_from_filename(filename, cod_estacao)
+            dataframes[tipo] = _read_txt_to_dataframe(zip_file.read(filename))
+
+    return dataframes
+
+
+def get_telemetrica_data(
     cod_estacao: int | str,
     timeout: int = 60,
 ) -> dict[str, pd.DataFrame]:
