@@ -13,7 +13,7 @@ pip install -e .
 Instale direto do GitHub:
 
 ```bash
-pip install "git+https://github.com/felipeiug/phydro.git"
+pip install "git+https://github.com/felipeiug/hidroweb.git"
 ```
 
 ## Funcoes disponiveis
