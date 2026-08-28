@@ -52,7 +52,7 @@ def format_chuva_vazao(
         raise ValueError("Nenhuma coluna diaria 'Tipo01Status' ... foi encontrada.")
 
     coluna_codigo = "Codigo" if "Codigo" in df.columns else "EstacaoCodigo"
-    coluna_metodo = "MetodoObtencaoChuvas" if tipo == "chuva" else "MetodoObtencaoVazoes"
+    coluna_metodo = "TipoMedicaoChuvas" if tipo == "chuva" else "MetodoObtencaoVazoes"
     colunas_identificadoras = [
         coluna_codigo,
         coluna_data,
