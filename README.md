@@ -47,6 +47,19 @@ chuvas = data["Chuvas"]
 clima = data["Clima"]
 ```
 
+Para transformar as colunas mensais `Chuva01` ... `Chuva31` ou `Vazao01` ...
+`Vazao31` em uma linha por dia:
+
+```python
+from phydro import format_chuva_vazao
+
+chuvas_diarias = format_chuva_vazao(chuvas, tipo="chuva")
+vazoes_diarias = format_chuva_vazao(data["Vazoes"], tipo="vazao")
+```
+
+A coluna `Data` deve identificar o mes de cada linha. Dias que nao existem no
+mes sao descartados automaticamente.
+
 ## API publica
 
 - `phydro.get_stations_list -> geopandas.GeoDataFrame`
