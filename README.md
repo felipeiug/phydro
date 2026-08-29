@@ -64,3 +64,9 @@ mes sao descartados automaticamente.
 
 - `phydro.get_stations_list -> geopandas.GeoDataFrame`
 - `phydro.get_station_data -> dict[str, pandas.DataFrame]`
+
+## Contribuindo
+
+Contribuições são bem-vindas. Antes de abrir um PR, consulte o guia em [CONTRIBUTING.md](CONTRIBUTING.md) e siga o padrão de branches, commits e descrição de pull requests.
+
+O template de PR também está disponível em [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md).
